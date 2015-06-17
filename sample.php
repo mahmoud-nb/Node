@@ -16,10 +16,11 @@
 	
 	<body>
 		<?php
+		
+			// div > ul > [li > a, li > a, li > a]
+			$HTML = new HTMLNode('div', new HTMLNode('ul', array( new HTMLNode( 'li', 'ITEM1'), new HTMLNode( 'li', 'ITEM2'), new HTMLNode( 'li', 'ITEM3') ), array('class'=>'navbar')),  array('class'=>'testC', "id"=>"ident"));
 
-			$block = new HTMLNode(new HTMLNode('UL_CONTENT', 'ul', array('class'=>'navbar')), 'div', array('class'=>'testC', "id"=>"ident"));
-
-			$block->build()->html;
+			$HTML->toString();
 			
 		?>
 	</body>

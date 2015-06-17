@@ -12,13 +12,21 @@ class HTMLNode{
 
 	public $html;
 
-	public function __construct($content="", $tag="div", $attr=array() ){
+	public function __construct($tag="div", $content="", $attr=array() ){
 
 		$this->tag = $tag ;
 		$this->attr = $attr;
 		$this->content = $content ;
 
 		return $this;
+	}
+	
+	/**
+	 * Object to string
+	 */
+	public function toString(){
+		$this->build();
+		echo $this->html;
 	}
 
 	/**
@@ -28,33 +36,25 @@ class HTMLNode{
 
 		if(is_array($this->content)){
 			foreach ($this->content as $key => $value) {
-				$value->bluid() ;
+				//echo'<pre>'; print_r($value); echo'</pre>'; // DEBUG
+				$this->html.= $value->build() ;
 			}
 		}else{
 			// Node Content
-			/*
-			if($this->content instanceof HTMLNode)
-				$this->content = $this->content->build();
-			*/
-			
 			$nodeContent = $this->content instanceof HTMLNode ? $this->content->build() : $this->content ;  
-			// TODO :: $nodeContent must be always a string
-			
+			// TODO :: $nodeContent must be always a string $nodeContent = is_string ($nodeContent) ? $nodeContent : 'TO FIX' ;
 			// Node Attributes
 			$this->getAttrString();
-			
+			//echo'<pre>'; print_r($this); echo'</pre>'; // DEBUG
 			// Node HTML
 			$this->html = '<'. $this->tag .' '. $this->attrString .'>'. $nodeContent .'</'. $this->tag .'>' ;
-			
-			echo $this->html ;
 		}
 
-		return $this ;
+		return $this->html ;
 	}
 
 	public function getChildContent(){
-		$this->content->build();
-		return $this;
+		return $this->content->build();
 	}
 	
 	/**
