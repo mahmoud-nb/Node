@@ -1,69 +1,74 @@
 <?php
-		/**
-		 * Build HTML NODE
-		 */
-		public function build(){
 
-			//echo '<br /><br />###### START BUILD NODE: '. '##'. $this->tag . '##' . 'C' . ' **'. $this->attrString . '**<br />';
-			
+/**
+ * HTML Node Class
+ */
+class HTMLNode{
 
-			if(is_array($this->content)){
-				foreach ($this->content as $key => $value) {
-					$value->bluid() ;
-				}
-			}else{
-				echo '<br />- ELSE: '. $this->tag .' :: '. ( $this->content instanceof HTMLNode ? 'ISNODE' : 'IS NOT') .'<br />'; 
-				// Node Content
-				/*
-				if($this->content instanceof HTMLNode){
-					$this->content = $this->content->build();
-				}
-				*/
-				
+	public $tag;
+	public $attr;
+	public $attrString = '';
+	public $content = "";
 
-				//$nodeContent = $this->content instanceof HTMLNode ? $this->content->build() : $this->content ;
-				$nodeContent = is_string ($this->content) ? $this->content : $this->content->build() ;
-				echo'<pre>'; print_r($nodeContent); echo'</pre>';
-				// Node Attributes
-				$this->getAttrString();
+	public $html;
 
-				//echo '<br />- PR: ';
-				//print_r($nodeContent);
-				//echo '<br />- BUILD NODE: '. '##'. $this->tag . '##' . $nodeContent . ' **'. $this->attrString . '**';
+	public function __construct($content="", $tag="div", $attr=array() ){
 
-				//echo'<pre>'; print_r($this); print_r($nodeContent); echo'</pre>';
+		$this->tag = $tag ;
+		$this->attr = $attr;
+		$this->content = $content ;
 
-				// Node HTML
-				$this->html = '<'. $this->tag .' '. $this->attrString .'>'. $this->content .'</'. $this->tag .'>' ;
-				echo $this->html ;
-			}
-
-			return $this ;
-		}
-
-		public function getChildContent(){
-			$this->content->build();
-			return $this;
-		}
-
-
-
-		/**
-		 * Attr Array to String
-		 * Array( key1 => value1, key2 => value2, ... ) to String key1="value1" key2="value2"
-		 */
-		public function getAttrString(){
-			$this->attrString = '';
-			if(is_array($this->attr))
-				array_walk($this->attr, array($this, 'attrToString'));  
-		} 
-
-		public function attrToString($item2, $key){
-	    	$this->attrString .= $key .'="'. $item2 .'" ';
-		}
-
-
+		return $this;
 	}
 
+	/**
+	 * Build HTML NODE
+	 */
+	public function build(){
 
+		if(is_array($this->content)){
+			foreach ($this->content as $key => $value) {
+				$value->bluid() ;
+			}
+		}else{
+			// Node Content
+			/*
+			if($this->content instanceof HTMLNode)
+				$this->content = $this->content->build();
+			*/
+			
+			$nodeContent = $this->content instanceof HTMLNode ? $this->content->build() : $this->content ;  
+			// TODO :: $nodeContent must be always a string
+			
+			// Node Attributes
+			$this->getAttrString();
+			
+			// Node HTML
+			$this->html = '<'. $this->tag .' '. $this->attrString .'>'. $nodeContent .'</'. $this->tag .'>' ;
+			
+			echo $this->html ;
+		}
+
+		return $this ;
+	}
+
+	public function getChildContent(){
+		$this->content->build();
+		return $this;
+	}
+	
+	/**
+	 * Attr Array to String
+	 * Array( key1 => value1, key2 => value2, ... ) to String key1="value1" key2="value2"
+	 */
+	public function getAttrString(){
+		$this->attrString = '';
+		if(is_array($this->attr))
+			array_walk($this->attr, array($this, 'attrToString'));  
+	} 
+
+	public function attrToString($item2, $key){
+		$this->attrString .= $key .'="'. $item2 .'" ';
+	}
+}
 
