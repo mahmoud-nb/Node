@@ -12,6 +12,7 @@ $content: it is the content of the tag. it can be a string, a HTMLNode object, o
 
 ## Exemple
 
+```
 $il1 = new HTMLNode('li', 'item content');
 $il2 = new HTMLNode('li', 'item content');
 $il3 = new HTMLNode('li', 'item content');
@@ -23,3 +24,4 @@ $ul = new HTMLNode('ul', $liItmes, array('id'=>'identifiant', 'class'=>'itmesNav
 $ulString = $ul->getHTML();
 
 $div = new HTMLNode('div', $ulString, array('class'=>'container'));
+```
