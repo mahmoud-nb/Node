@@ -28,6 +28,13 @@ class HTMLNode{
 		$this->build();
 		echo $this->html;
 	}
+	
+	/**
+	 * Return the generated html
+	 */
+	public function getHTML(){
+		return $this->html;
+	}
 
 	/**
 	 * Recursive HTML Nodes Builder
