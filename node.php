@@ -30,31 +30,28 @@ class HTMLNode{
 	}
 
 	/**
-	 * Build HTML NODE
+	 * Recursive HTML Nodes Builder
 	 */
 	public function build(){
 
+		// Node Attributes;
+		$this->getAttrString();
+		
 		if(is_array($this->content)){
-			foreach ($this->content as $key => $value) {
-				//echo'<pre>'; print_r($value); echo'</pre>'; // DEBUG
+			$this->html.= '<'. $this->tag .' '. $this->attrString .'>' ;
+			foreach ($this->content as $key => $value) 
 				$this->html.= $value->build() ;
-			}
+
+			$this->html .= '</'. $this->tag .'>';
 		}else{
 			// Node Content
 			$nodeContent = $this->content instanceof HTMLNode ? $this->content->build() : $this->content ;  
-			// TODO :: $nodeContent must be always a string $nodeContent = is_string ($nodeContent) ? $nodeContent : 'TO FIX' ;
-			// Node Attributes
-			$this->getAttrString();
-			//echo'<pre>'; print_r($this); echo'</pre>'; // DEBUG
+
 			// Node HTML
 			$this->html = '<'. $this->tag .' '. $this->attrString .'>'. $nodeContent .'</'. $this->tag .'>' ;
 		}
 
 		return $this->html ;
-	}
-
-	public function getChildContent(){
-		return $this->content->build();
 	}
 	
 	/**

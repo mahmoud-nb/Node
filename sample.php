@@ -18,7 +18,13 @@
 		<?php
 		
 			// div > ul > [li > a, li > a, li > a]
-			$HTML = new HTMLNode('div', new HTMLNode('ul', array( new HTMLNode( 'li', 'ITEM1'), new HTMLNode( 'li', 'ITEM2'), new HTMLNode( 'li', 'ITEM3') ), array('class'=>'navbar')),  array('class'=>'testC', "id"=>"ident"));
+			/*
+			$HTML = new HTMLNode('div', 'Node Content',  array('class'=>'testC', "id"=>"ident"));
+			$UL = new HTMLNode('ul', '...',  array('class'=>'navBar'));
+			$HTML->setContent();
+			*/
+			
+			$HTML = new HTMLNode('div', new HTMLNode('ul', array( new HTMLNode( 'li', 'ITEM1', array('class'=>'first')), new HTMLNode( 'li', 'ITEM2'), new HTMLNode( 'li', 'ITEM3') ), array('class'=>'navbar')),  array('class'=>'testC', "id"=>"ident"));
 
 			$HTML->toString();
 			
